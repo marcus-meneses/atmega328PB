@@ -1,0 +1,72 @@
+OPERATION registers:
+
+31		15	7	0
+[		EAX		]
+		[	AX	]
+		[   AH  ][  AL  ]
+ 
+[		EBX		]
+		[	BX	]
+		[   BH  ][  BL  ]
+
+[		ECX		]
+		[	CX	]
+		[   CH  ][  CL  ]
+
+[		EDX		]
+		[	DX	]
+		[   DH  ][  DL  ]
+ 
+
+INDEX registers
+
+[		ESI		]
+		[	SI	]
+
+
+[		EDI		]
+		[	DI	]
+ 
+
+[		EBP		]
+		[	BP	]
+
+
+[		ESP		]
+		[	SP	]
+
+
+[		EIP		]
+		[	IP	]
+
+FLAGS
+16		 7		 0
+[	F2	][       F1	 ]
+ 0 0 W V T N L L  O D I S Z A P C
+
+W  - TASK SWITCH ENABLED
+V  - CUSTOM INTERRUPT VECTOR SET
+T  - TASK SWITCH SCHEDULED
+N  - SOFTWARE INTERRUPT WAITING
+LL - PROGRAM RING LEVEL: 00 -> KERNEL, 11-> USERLAND
+O  - OVERFLOW
+D  - DIRECTION
+I  - INTERRUPT ENABLED
+S  - SIGN
+Z  - ZERO
+A  - ADJUST
+P  - PARITY
+C  - CARRY
+
+
+CONTROL registers (16 BIT)
+
+CR0 -> INTERRUPT VECTOR TABLE
+CR1 -> TASK QUEUE TABLE
+
+CONTROL registers (8 BIT)
+
+CR2 -> SOFTWARE INTERRUPT WAITING (SYSTEM CALL)
+
+
+

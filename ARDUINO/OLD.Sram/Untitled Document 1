@@ -1,0 +1,55 @@
+//strcpy_P(buffer, (char*)pgm_read_word(&(string_table[i])));
+
+
+
+class Radio {
+
+	public:
+		rn2903(Stream &port, Sram &memory);
+
+
+
+	private:
+		int8_t 	streamWaitResponse(uint32_t wait_milliseconds); //0:error, 1:ok, -1:timeout
+		bool 	radioWaitPacket(uint32_t wait_milliseconds); // 1:ok, 0:error/timeout
+		Stream 	port;	//our serial port to the radio boi
+		Sram 	memory;    //our memory object
+		
+
+}
+
+
+#define SRAM_RDSR        5         // READ REGISTER
+#define SRAM_WRSR        1         // WRITE REGISTER
+#define SRAM_READ        3         // READ OPERATION
+#define SRAM_WRITE       2         // WRITE OPERATION 
+
+class Sram {
+
+	public:
+		memory(SPIClass &peripherial, uint8_t CS);
+		uint8_t memread(uint32_t address);
+		void 	memwrite(uint32_t address, uint8_t data_byte);
+		void 	memclear();
+		int8_t 	memcheck()
+		bool 	fetchString (char * location);
+		bool 	loadString (char * location);
+
+
+	private:
+		uint32_t readPointer;       	//for sequential access
+		uint32_t writePointer;	    	//for sequential access
+		SPIClass peripherial;	    	//our SPI peripherial
+		uint8_t  SPI_cs;	    	//our chip select pin
+		
+		
+		void lock();		    	//set SPI_cs low and wait for operations
+		void release();		    	//set SPI_cs high and release use of port
+		void loadPointers();	    	//loads pointers from non volatile to ram
+		void setRP(uint32_t siz);   	//set Read pointer (bytes 1,2,3,4 of memory);
+		void setWP(uint32_t siz);   	//set Write pointer (bytes 5,6,7,8 of memory);
+		void decreaseRP(uint32_t siz);	//decrease read pointer by parameter
+		void decreaseWP(uint32_t siz);	//decrease write pointer by parameter
+		void increaseRP(uint32_t siz);  //increase read pointer by parameter
+		void increaseWP(uint32_t siz);	//increase write pointer by parameter
+}
